@@ -1,5 +1,6 @@
 <?php
 
+namespace OBDII; 
 /**
  * OBDII Helper
  * @author Ciaran Synnott <hello@synnott.co.uk>
