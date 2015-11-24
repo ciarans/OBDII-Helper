@@ -2,11 +2,10 @@
 OBDII Helper breaks down a parsed OBDII code to tell you what it falls under with regards to system information.
 
 # Information returned
-* Code
-* Code Type
-* System Group
-**Body (B)
-* System Area
+* Code - Formatted Code - p1349 => P1349
+* Code Type - SAE defined (EOBD), Manufacturer defined
+* System Group - Body (B), Chassis (C), Powertrain (P), Network communications (UART) (U)
+* System Area - Fuel, air or emission control, Transmission, Ignition system or misfire, Auxiliary inputs, Hybrid propulsion
 
 # Example
 ```php
