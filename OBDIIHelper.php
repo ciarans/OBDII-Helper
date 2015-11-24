@@ -1,7 +1,7 @@
 <?php
 
 /**
- * OBDII Helper
+ * OBDII Helper - Helps define a OBDII code.
  * @author Ciaran Synnott <hello@synnott.co.uk>
  * @copyright (c) 2015 - Ciaran Synnott
  * @license 
@@ -26,23 +26,33 @@
 
 class OBDIIHelper {
     
-    /* START - Code Types */
+     /**
+     * Code Types
+     * @access protected
+     * @var array
+     */
     protected $code_types = array(
         "B" => array(0 => "SAE defined (EOBD)", 1 => "Manufacturer defined", 2 => "Manufacturer defined", 3 => "For future allocation"),
         "C" => array(0 => "SAE defined (EOBD)", 1 => "Manufacturer defined", 2 => "Manufacturer defined", 3 => "For future allocation"),
         "U" => array(0 => "SAE defined (EOBD)", 1 => "Manufacturer defined", 2 => "Manufacturer defined", 3 => "SAE defined (EOBD)"),
         "P" => array(0 => "SAE defined (EOBD)", 1 => "Manufacturer defined", 2 => "SAE defined (EOBD)")
     );
-    /* END - Code Types */
 
-    /*  START - System Groups */
+     /**
+     * System Groups
+     * @access protected
+     * @var array
+     */
     protected $system_groups = array(
         "B" => "Body", "C" => "Chassis",
         "P" => "Powetrain", "U" => "Network communications (UART)"
     );
-    /* END - System Groups */
-
-    /* START - System Areas  */
+    
+     /**
+     * System Areas for P0 codes
+     * @access protected
+     * @var array
+     */
     protected $system_areas_p0 = array(
         0 => "Fuel, air or emission control", 1 => "Fuel or air",
         2 => "Fuel or air", 3 => "Ignition system or misfire",
@@ -53,6 +63,12 @@ class OBDIIHelper {
         "C" => "Hybrid propulsion", "D" => "Hybrid propulsion",
         "E" => "For future allocation", "F" => "For future allocation"
     );
+    
+     /**
+     * System Areas for P1 codes
+     * @access protected
+     * @var array
+     */
     protected $system_areas_p1 = array(
         0 => "Fuel, air or emission control", 1 => "Fuel or air",
         2 => "Fuel or air", 3 => "Ignition system or misfire",
@@ -63,6 +79,12 @@ class OBDIIHelper {
         "C" => "Hybrid propulsion", "D" => "Hybrid propulsion",
         "E" => "For future allocation", "F" => "For future allocation"
     );
+    
+     /**
+     * System Areas for P2 codes
+     * @access protected
+     * @var array
+     */
     protected $system_areas_p2 = array(
         0 => "Fuel, air or emission control", 1 => "Fuel, air or emission control",
         2 => "Fuel, air or emission control", 3 => "Ignition system or misfire",
@@ -73,6 +95,12 @@ class OBDIIHelper {
         "C" => "For future allocation", "D" => "For future allocation",
         "E" => "For future allocation", "F" => "For future allocation"
     );
+    
+     /**
+     * System Areas for P3 codes
+     * @access protected
+     * @var array
+     */
     protected $system_areas_p3 = array(
         0 => "Fuel, air or emission control", 1 => "Fuel, air or emission control",
         2 => "Fuel, air or emission control", 3 => "Ignition system or misfire",
@@ -83,6 +111,12 @@ class OBDIIHelper {
         "C" => "For future allocation", "D" => "For future allocation",
         "E" => "For future allocation", "F" => "For future allocation"
     );
+    
+     /**
+     * System Areas for U codes
+     * @access protected
+     * @var array
+     */
     protected $system_areas_u = array(
         0 => "Network electrical", 1 => "Network communications",
         2 => "Network communications", 3 => "Network software",
@@ -96,6 +130,13 @@ class OBDIIHelper {
 
     /*  END - System Areas */
 
+    
+    /**
+     * Returns OBDII code breakdown
+     * @access public 
+     * @param string $code
+     * @return object
+     */
     public function get_code_data($code) {
         $cleaned_code = strtoupper(preg_replace('/\s+/', '', $code));
         
@@ -122,7 +163,13 @@ class OBDIIHelper {
         return $breakdown;
         
     }
-
+    
+    /**
+     * Validates the length of the code
+     * @access private 
+     * @param string $code
+     * @return boolean
+     */
     private function validate_length($code) {
         if (strlen($code) != 5) {
             exit("Code " . $code . " is not a valid OBDII Code Length.");
@@ -130,7 +177,13 @@ class OBDIIHelper {
             return true;
         }
     }
-
+    
+    /**
+     * Gets the system type
+     * @access private 
+     * @param string $code
+     * @return string
+     */
     private function get_system_group($code) {
         // Validate system groups
         if (!isset($this->system_groups[$code[0]])) {
@@ -139,7 +192,13 @@ class OBDIIHelper {
             return $this->system_groups[$code[0]];
         }
     }
-
+    
+    /**
+     * Gets the code type
+     * @access private 
+     * @param string $code
+     * @return string
+     */
     private function get_code_type($code) {
         if ($code[0] == "P" && $code[1] == "3") { // P codes are not as straight forward as usual
             $number = substr($code, 1); // remove letter - the first char
@@ -158,7 +217,13 @@ class OBDIIHelper {
             }
         }
     }
-
+    
+    /**
+     * Gets the system area
+     * @access private 
+     * @param string $code
+     * @return mixed
+     */
     private function get_system_area($code) {
         $system_group = $code[0];
 
