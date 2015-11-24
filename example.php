@@ -19,13 +19,13 @@ $code = $o->get_code_data("P1448");
       
 */
 
-$code = $o->get_code_data("P2248");
+$code = $o->get_code_data("P2248-12");
 
 /* OUTPUT for P2248
 
     stdClass Object
     (
-        [code] => P2248
+        [code] => P2248-12
         [code_type] => SAE defined (EOBD)
         [system_group] => Powetrain
         [system_area] => Fuel, air or emission control
