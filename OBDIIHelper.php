@@ -1,5 +1,4 @@
 <?php
-
 /**
  * OBDII Helper - Helps define a OBDII code.
  * @author Ciaran Synnott <hello@synnott.co.uk>
@@ -127,9 +126,6 @@ class OBDIIHelper {
         "C" => "For future allocation", "D" => "For future allocation",
         "E" => "For future allocation", "F" => "For future allocation"
     );
-
-    /*  END - System Areas */
-
     
     /**
      * Returns OBDII code breakdown
@@ -154,8 +150,12 @@ class OBDIIHelper {
              
         $this->validate_length($prefix);
         
+        $_code = $prefix;
+        if($suffix != null){
+            $_code .= "-".$suffix;
+        }
         $breakdown = new stdClass();
-        $breakdown->code = $prefix."-".$suffix;
+        $breakdown->code = $_code;
         $breakdown->code_type = $this->get_code_type($prefix);
         $breakdown->system_group = $this->get_system_group($prefix);
         $breakdown->system_area = $this->get_system_area($prefix);
